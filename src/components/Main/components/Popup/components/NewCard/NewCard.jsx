@@ -1,4 +1,4 @@
-function NewCard() {
+export default function NewCard() {
   return (
     <form
       className="popup__form"
@@ -37,5 +37,3 @@ function NewCard() {
     </form>
   );
 }
-
-export default NewCard;
