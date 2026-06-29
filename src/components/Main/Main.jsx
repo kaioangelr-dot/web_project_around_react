@@ -5,8 +5,28 @@ import Popup from "./components/Popup/Popup";
 import NewCard from "./components/Popup/components/NewCard/NewCard";
 import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
 import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
+import Card from "./components/Card/Card";
 
-function Main() {
+const cards = [
+  {
+    isLiked: false,
+    _id: "5d1f0611d321eb4bdcd707dd",
+    name: "Yosemite Valley",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
+    owner: "5d1f0611d321eb4bdcd707dd",
+    createdAt: "2019-07-05T08:10:57.741Z",
+  },
+  {
+    isLiked: false,
+    _id: "5d1f064ed321eb4bdcd707de",
+    name: "Lake Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
+    owner: "5d1f0611d321eb4bdcd707dd",
+    createdAt: "2019-07-05T08:11:58.324Z",
+  },
+];
+
+export default function Main() {
   const [popup, setPopup] = useState(null);
 
   function handleOpenPopup(popup) {
@@ -18,8 +38,8 @@ function Main() {
   }
 
   const newCardPopup = { title: "Novo Local", children: <NewCard /> };
-  const editProfilePopup = { title: "Editar perfil", children: <EditProfile /> }; //prettier-ignore
-  const editEditAvatar = { title: "Alterar a foto do perfil", children: <EditAvatar /> }; //prettier-ignore
+  const editProfilePopup = { title: "Editar Perfil", children: <EditProfile /> }; //prettier-ignore
+  const editEditAvatar = { title: "Alterar a Foto do Perfil", children: <EditAvatar /> }; //prettier-ignore
 
   return (
     <main className="content">
@@ -48,25 +68,11 @@ function Main() {
         ></button>
       </section>
       <section className="cards page__section">
-        <template id="card-template">
-          <li className="card">
-            <img className="card__image" src="null" alt="" />
-            <button
-              aria-label="Delete Card"
-              className="card__delete-button"
-              type="button"
-            ></button>
-            <div className="card__description">
-              <h2 className="card__title"></h2>
-              <button
-                aria-label="Like Button"
-                className="card__like-button"
-                type="button"
-              ></button>
-            </div>
-          </li>
-        </template>
-        <ul className="cards__list"></ul>
+        <ul className="cards__list">
+          {cards.map((card) => (
+            <Card key={card._id} card={card} />
+          ))}
+        </ul>
       </section>
 
       {popup && (
@@ -77,5 +83,3 @@ function Main() {
     </main>
   );
 }
-
-export default Main;

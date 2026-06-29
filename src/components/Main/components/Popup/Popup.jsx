@@ -1,4 +1,4 @@
-function Popup(props) {
+export default function Popup(props) {
   const { onClose, title, children } = props;
   return (
     <div className="popup">
@@ -15,5 +15,3 @@ function Popup(props) {
     </div>
   );
 }
-
-export default Popup;

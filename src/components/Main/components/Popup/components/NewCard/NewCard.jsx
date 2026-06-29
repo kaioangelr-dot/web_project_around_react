@@ -14,8 +14,8 @@ function NewCard() {
           placeholder="Título"
           required
           type="text"
-          minlength="2"
-          maxlength="40"
+          minLength="2"
+          maxLength="40"
         />
         <span id="place-name-input-error" className="popup__input-error"></span>
       </label>
