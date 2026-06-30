@@ -2,14 +2,12 @@ import Header from "../Header/Header";
 import Main from "./Main/Main";
 import Footer from "./Footer/Footer";
 
-function App() {
+export default function App() {
   return (
     <div className="page__content">
-      <Header></Header>
-      <Main></Main>
-      <Footer></Footer>
+      <Header />
+      <Main />
+      <Footer />
     </div>
   );
 }
-
-export default App;

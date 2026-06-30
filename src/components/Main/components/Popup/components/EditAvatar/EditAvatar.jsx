@@ -1,4 +1,4 @@
-function EditAvatar() {
+export default function EditAvatar() {
   return (
     <form className="popup__form" id="edit-profile-form">
       <label className="popup__field">
@@ -21,5 +21,3 @@ function EditAvatar() {
     </form>
   );
 }
-
-export default EditAvatar;

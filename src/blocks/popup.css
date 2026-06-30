@@ -9,6 +9,7 @@
   bottom: 0;
   right: 0;
   display: flex;
+  z-index: 1;
   /* visibility: hidden;
   opacity: 0; */
 }

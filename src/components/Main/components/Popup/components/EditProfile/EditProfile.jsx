@@ -1,4 +1,4 @@
-function EditProfile() {
+export default function EditProfile() {
   return (
     <form className="popup__form" id="edit-profile-form">
       <label className="popup__field">
@@ -8,8 +8,8 @@ function EditProfile() {
           id="name"
           placeholder="Nome"
           type="text"
-          minlength="2"
-          maxlength="40"
+          minLength="2"
+          maxLength="40"
           required
         />
         <span id="name-input-error" className="popup__input-error"></span>
@@ -21,8 +21,8 @@ function EditProfile() {
           id="description"
           placeholder="Sobre mim"
           type="text"
-          minlength="2"
-          maxlength="200"
+          minLength="2"
+          maxLength="200"
           required
         />
         <span
@@ -36,5 +36,3 @@ function EditProfile() {
     </form>
   );
 }
-
-export default EditProfile;
