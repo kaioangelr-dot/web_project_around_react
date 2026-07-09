@@ -41,9 +41,23 @@ export default function App() {
     })();
   };
 
+  const handleUpdateAvatar = (data) => {
+    (async () => {
+      await api
+        .editAvatar(data.avatar)
+        .then((newData) => {
+          setCurrentUser(newData);
+          handleClosePopup();
+        })
+        .catch((error) => console.error(error));
+    })();
+  };
+
   return (
     <div className="page__content">
-      <CurrentUserContext.Provider value={{ currentUser, handleUpdateUser }}>
+      <CurrentUserContext.Provider
+        value={{ currentUser, handleUpdateUser, handleUpdateAvatar }}
+      >
         <Header />
         <Main
           handleOpenPopup={handleOpenPopup}

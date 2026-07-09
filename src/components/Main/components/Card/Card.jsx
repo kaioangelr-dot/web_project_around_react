@@ -4,8 +4,7 @@ import Popup from "../Popup/Popup";
 
 export default function Card(props) {
   const { name, link, isLiked, owner } = props.card;
-  const { onOpenPopup, onClosePopup, onCardLike, onCardDelete, currentUser } =
-    props;
+  const { onOpenPopup, onClosePopup, onCardLike, onCardDelete, currentUser } = props; /* prettier-ignore */
   const imageComponent = {
     children: <ImagePopup card={props.card} />,
   };
