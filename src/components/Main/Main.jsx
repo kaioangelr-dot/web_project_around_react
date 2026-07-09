@@ -1,32 +1,54 @@
 import avatar from "../../images/avatar.jpg";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Popup from "./components/Popup/Popup";
 
 import NewCard from "./components/Popup/components/NewCard/NewCard";
 import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
 import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
 import Card from "./components/Card/Card";
+import { api } from "../../utils/api";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-const cards = [
-  {
-    isLiked: false,
-    _id: "5d1f0611d321eb4bdcd707dd",
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-    owner: "5d1f0611d321eb4bdcd707dd",
-    createdAt: "2019-07-05T08:10:57.741Z",
-  },
-  {
-    isLiked: false,
-    _id: "5d1f064ed321eb4bdcd707de",
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-    owner: "5d1f0611d321eb4bdcd707dd",
-    createdAt: "2019-07-05T08:11:58.324Z",
-  },
-];
+const cards = [];
 
 export default function Main() {
+  const currentUser = useContext(CurrentUserContext);
+
+  const [cards, setCards] = useState([]);
+
+  useEffect(() => {
+    api
+      .getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  async function handleCardLike(card) {
+    await api
+      .changeLikeCardStatus(card._id, card.isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((currentCard) =>
+            currentCard._id === card._id ? newCard : currentCard,
+          ),
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+
+  async function handleCardDelete(card) {
+    await api
+      .deleteCard(card._id)
+      .then((newCard) => {
+        setCards((state) =>
+          state.filter((currentCard) => currentCard._id !== card._id),
+        );
+      })
+      .catch((error) => console.error(error));
+  }
+
   const [popup, setPopup] = useState(null);
 
   function handleOpenPopup(popup) {
@@ -37,9 +59,18 @@ export default function Main() {
     setPopup(null);
   }
 
-  const newCardPopup = { title: "Novo Local", children: <NewCard /> };
-  const editProfilePopup = { title: "Editar Perfil", children: <EditProfile /> }; //prettier-ignore
-  const editEditAvatar = { title: "Alterar a Foto do Perfil", children: <EditAvatar /> }; //prettier-ignore
+  const newCardPopup = {
+    title: "Novo Local",
+    children: <NewCard />,
+  };
+  const editProfilePopup = {
+    title: "Editar Perfil",
+    children: <EditProfile />,
+  };
+  const editEditAvatar = {
+    title: "Alterar a Foto do Perfil",
+    children: <EditAvatar />,
+  };
 
   return (
     <main className="content">
@@ -48,17 +79,21 @@ export default function Main() {
           className="profile__image-container"
           onClick={() => handleOpenPopup(editEditAvatar)}
         >
-          <img className="profile__image" src={avatar} alt="Avatar" />
+          <img
+            className="profile__image"
+            src={currentUser.avatar}
+            alt="Avatar"
+          />
         </div>
         <div className="profile__info">
-          <h1 className="profile__title">Jacques Cousteau</h1>
+          <h1 className="profile__title">{currentUser.name}</h1>
           <button
             aria-label="Edit Profile"
             className="profile__edit-button"
             type="button"
             onClick={() => handleOpenPopup(editProfilePopup)}
           ></button>
-          <p className="profile__description">Explorador</p>
+          <p className="profile__description">{currentUser.about}</p>
         </div>
         <button
           aria-label="Add Card"
@@ -70,7 +105,14 @@ export default function Main() {
       <section className="cards page__section">
         <ul className="cards__list">
           {cards.map((card) => (
-            <Card key={card._id} card={card} onOpenPopup={handleOpenPopup} />
+            <Card
+              key={card._id}
+              card={card}
+              onOpenPopup={handleOpenPopup}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              onClosePopup={handleClosePopup}
+            />
           ))}
         </ul>
       </section>

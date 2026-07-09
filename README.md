@@ -69,31 +69,34 @@ This repository contains the **React** refactored version of the "Around the U.S
 - [ ] Implement click handlers for deleting cards.
 - [ ] Connect forms (`EditProfile`, `NewCard`, `EditAvatar`) with controlled states and original API calls.
 - [ ] Add native React form validation.
-- [ ] Add like features in the cards.
+- [:white_check_mark:] Add like and delete features in the cards.
 
 ## Project Structure
 
 ```text
 src/
 ├── components/
-│   ├── App.jsx                # Root application component
-│   ├── Header/                # Page header containing the logo
-│   ├── Footer/                # Footer with copyright information
-│   └── Main/                  # Main content and state management
+│   ├── App.jsx                 # Root application component
+│   ├── Header/                 # Page header containing the logo
+│   ├── Footer/                 # Footer with copyright information
+│   ├── contexts/
+│   |   └── CurrentUserContext/ # Context for the user data
+│   └── Main/                   # Main content and state management
 │       ├── Main.jsx
-│       └── components/        # Base component for reusable modals
-│           ├── Card/          # Individual rendering for place cards
+│       └── components/         # Base component for reusable modals
+│           ├── Card/           # Individual rendering for place cards
 │           └── Popup/
 │               └── Popup.jsx
 │                   └── components/
-│                       ├── EditProfile/    # Profile editing form
-│                       ├── EditAvatar/     # Avatar change form
-│                       ├── NewCard/        # Add new card form
-│                       └── ImagePopup/     # Expanded view of the clicked photo
+│                       ├── EditProfile/
+│                       ├── EditAvatar/
+│                       ├── NewCard/
+│                       ├── ImagePopup/
+│                       └── PopupWithConfirmation/
 │
 ├── blocks/                    #Css blocks
-├── images/                    # Imported images, icons, and SVGs
-└── index.css                  # Unified global styles
+├── images/
+└── index.css
 ```
 
 ---
