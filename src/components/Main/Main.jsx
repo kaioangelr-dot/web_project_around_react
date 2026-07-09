@@ -112,6 +112,7 @@ export default function Main() {
               onCardLike={handleCardLike}
               onCardDelete={handleCardDelete}
               onClosePopup={handleClosePopup}
+              currentUser={currentUser}
             />
           ))}
         </ul>
