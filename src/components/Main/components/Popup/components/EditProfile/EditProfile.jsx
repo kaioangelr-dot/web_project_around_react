@@ -1,6 +1,35 @@
-export default function EditProfile() {
+import { useState, useContext } from "react";
+import { CurrentUserContext } from "../../../../../../contexts/CurrentUserContext";
+
+export default function EditProfile(props) {
+  const { onClose } = props;
+  const userContext = useContext(CurrentUserContext);
+  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
+
+  const [name, setName] = useState(currentUser.name);
+  const [description, setDescription] = useState(currentUser.about);
+
+  const handleNameChange = (evt) => {
+    setName(evt.target.value);
+  };
+
+  const handleDescriptionChange = (evt) => {
+    setDescription(evt.target.value);
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    handleUpdateUser({ name, about: description });
+  };
+
   return (
-    <form className="popup__form" id="edit-profile-form">
+    <form
+      className="popup__form"
+      id="edit-profile-form"
+      onSubmit={handleSubmit}
+      noValidate
+    >
       <label className="popup__field">
         <input
           className="popup__input popup__input_type_name"
@@ -10,6 +39,8 @@ export default function EditProfile() {
           type="text"
           minLength="2"
           maxLength="40"
+          value={name}
+          onChange={handleNameChange}
           required
         />
         <span id="name-input-error" className="popup__input-error"></span>
@@ -23,6 +54,8 @@ export default function EditProfile() {
           type="text"
           minLength="2"
           maxLength="200"
+          value={description}
+          onChange={handleDescriptionChange}
           required
         />
         <span
@@ -30,7 +63,7 @@ export default function EditProfile() {
           className="popup__input-error"
         ></span>
       </label>
-      <button className="button popup__button" type="submit" disabled>
+      <button className="button popup__button" type="submit">
         Salvar
       </button>
     </form>

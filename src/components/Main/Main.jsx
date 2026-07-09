@@ -11,10 +11,12 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const cards = [];
 
-export default function Main() {
-  const currentUser = useContext(CurrentUserContext);
+export default function Main(props) {
+  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
 
   const [cards, setCards] = useState([]);
+
+  const { handleOpenPopup, handleClosePopup, popup } = props;
 
   useEffect(() => {
     api
@@ -49,23 +51,13 @@ export default function Main() {
       .catch((error) => console.error(error));
   }
 
-  const [popup, setPopup] = useState(null);
-
-  function handleOpenPopup(popup) {
-    setPopup(popup);
-  }
-
-  function handleClosePopup() {
-    setPopup(null);
-  }
-
   const newCardPopup = {
     title: "Novo Local",
     children: <NewCard />,
   };
   const editProfilePopup = {
     title: "Editar Perfil",
-    children: <EditProfile />,
+    children: <EditProfile onClose={handleClosePopup} />,
   };
   const editEditAvatar = {
     title: "Alterar a Foto do Perfil",

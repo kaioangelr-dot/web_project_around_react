@@ -6,22 +6,50 @@ import { useState, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function App() {
-  const [currentUser, setUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
+
+  const [popup, setPopup] = useState(null);
+
+  function handleOpenPopup(popup) {
+    setPopup(popup);
+  }
+
+  function handleClosePopup() {
+    setPopup(null);
+  }
 
   useEffect(() => {
-    api
-      .getUserInfo()
-      .then((data) => {
-        setUser(data);
-      })
-      .catch((err) => console.log(err));
+    (async () => {
+      await api
+        .getUserInfo()
+        .then((data) => {
+          setCurrentUser(data);
+        })
+        .catch((error) => console.error(error));
+    })();
   }, []);
+
+  const handleUpdateUser = (data) => {
+    (async () => {
+      await api
+        .editUserInfo(data)
+        .then((newData) => {
+          setCurrentUser(newData);
+          handleClosePopup();
+        })
+        .catch((error) => console.error(error));
+    })();
+  };
 
   return (
     <div className="page__content">
-      <CurrentUserContext.Provider value={currentUser}>
+      <CurrentUserContext.Provider value={{ currentUser, handleUpdateUser }}>
         <Header />
-        <Main />
+        <Main
+          handleOpenPopup={handleOpenPopup}
+          handleClosePopup={handleClosePopup}
+          popup={popup}
+        />
         <Footer />
       </CurrentUserContext.Provider>
     </div>
