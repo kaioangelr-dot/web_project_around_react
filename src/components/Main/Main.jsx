@@ -6,50 +6,19 @@ import NewCard from "./components/Popup/components/NewCard/NewCard";
 import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
 import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
 import Card from "./components/Card/Card";
-import { api } from "../../utils/api";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-
-const cards = [];
 
 export default function Main(props) {
   const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
 
-  const [cards, setCards] = useState([]);
-
-  const { handleOpenPopup, handleClosePopup, popup } = props;
-
-  useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  async function handleCardLike(card) {
-    await api
-      .changeLikeCardStatus(card._id, card.isLiked)
-      .then((newCard) => {
-        setCards((state) =>
-          state.map((currentCard) =>
-            currentCard._id === card._id ? newCard : currentCard,
-          ),
-        );
-      })
-      .catch((error) => console.error(error));
-  }
-
-  async function handleCardDelete(card) {
-    await api
-      .deleteCard(card._id)
-      .then((newCard) => {
-        setCards((state) =>
-          state.filter((currentCard) => currentCard._id !== card._id),
-        );
-      })
-      .catch((error) => console.error(error));
-  }
+  const {
+    handleOpenPopup,
+    handleClosePopup,
+    popup,
+    cards,
+    handleCardLike,
+    handleCardDelete,
+  } = props;
 
   const newCardPopup = {
     title: "Novo Local",
