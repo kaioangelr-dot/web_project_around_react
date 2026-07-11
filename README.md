@@ -17,22 +17,24 @@ This repository contains the **React** refactored version of the "Around the U.S
 
 ### 1. Componentization and Reusability
 
-- **Generic `Popup.jsx`:** A single structural modal that receives a `title` and dynamically injects the corresponding form via `children`.
-- **Dynamic `Card.jsx`:** Renders place images by destructuring data received via properties (`props.card`), handling accessibility (`alt`), and dynamically applying active like classes based on variables (`isLiked`).
+Reusable Popup.jsx: single modal wrapper that accepts a title and renders form content via children.
+Flexible Card.jsx: displays place images from props.card, handles accessibility with alt, and toggles the like state with dynamic class names.
 
-### 2. Data Flow and States (`useState`)
+### 2. State Management and Data Flow
 
-- Centralization of the open modal state in the `Main.jsx` component using conditional rendering:
-  ```jsx
-  {
-    popup && (
-      <Popup title={popup.title} onClose={handleClosePopup}>
-        {popup.children}
-      </Popup>
-    );
-  }
-  ```
-- Proper passing of contextual card data to the expanded image popup, ensuring that the original photo title and link are transmitted without violating the React lifecycle.
+Centralized popup state in Main.jsx with conditional rendering:
+popup && <Popup title={popup.title} onClose={handleClosePopup}>{popup.children}</Popup>
+Properly passes selected card data to the image preview popup so photo title and link are preserved.
+
+### 3. API Actions and User Interactions
+
+Liking and unliking cards with API updates
+Deleting cards and updating state using filter()
+Editing profile information using managed components and Context API
+Updating avatar through refs
+Adding new cards with state updates using the spread operator
+Automatically closing popups after API requests
+Native React form validation
 
 ---
 
@@ -70,6 +72,10 @@ This repository contains the **React** refactored version of the "Around the U.S
 - [x] Connect forms (`EditProfile`, `NewCard`, `EditAvatar`) with controlled states and original API calls.
 - [x] Add native React form validation.
 - [x] Add like and delete features in the cards.
+- [ ] Add Css Masonry
+- [ ] Add user login
+- [ ] Add sign up
+- [ ] Add Like buttons counts
 
 ## Project Structure
 
