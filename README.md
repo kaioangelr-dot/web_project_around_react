@@ -72,9 +72,9 @@ Native React form validation
 - [x] Connect forms (`EditProfile`, `NewCard`, `EditAvatar`) with controlled states and original API calls.
 - [x] Add native React form validation.
 - [x] Add like and delete features in the cards.
-- [ ] Add Css Masonry
-- [ ] Add user login
-- [ ] Add sign up
+- [ ] Costumize site with Css Masonry
+- [ ] Implement user login
+- [ ] Implement sign up
 - [ ] Add Like buttons counts
 
 ## Project Structure

@@ -12,6 +12,8 @@ export default function App() {
 
   const [cards, setCards] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   //form validator
   const [textError, setTextError] = useState("");
   const [nameError, setNameError] = useState("");
@@ -61,6 +63,8 @@ export default function App() {
 
   function handleOpenPopup(popup) {
     setPopup(popup);
+
+    setIsValid(false);
   }
 
   function handleClosePopup() {
@@ -82,6 +86,7 @@ export default function App() {
   }, []);
 
   const handleUpdateUser = (data) => {
+    setIsLoading(true);
     (async () => {
       await api
         .editUserInfo(data)
@@ -89,11 +94,13 @@ export default function App() {
           setCurrentUser(newData);
           handleClosePopup();
         })
-        .catch((error) => console.error(error));
+        .catch((error) => console.error(error))
+        .finally(() => setIsLoading(false));
     })();
   };
 
   const handleUpdateAvatar = (data) => {
+    setIsLoading(true);
     (async () => {
       await api
         .editAvatar(data.avatar)
@@ -101,11 +108,13 @@ export default function App() {
           setCurrentUser(newData);
           handleClosePopup();
         })
-        .catch((error) => console.error(error));
+        .catch((error) => console.error(error))
+        .finally(() => setIsLoading(false));
     })();
   };
 
   const handleAddPlaceSubmit = (data) => {
+    setIsLoading(true);
     (async () => {
       await api
         .addNewCard(data)
@@ -113,7 +122,8 @@ export default function App() {
           setCards([newCard, ...cards]);
           handleClosePopup();
         })
-        .catch((error) => console.error(error));
+        .catch((error) => console.error(error))
+        .finally(() => setIsLoading(false));
     })();
   };
 
@@ -158,6 +168,7 @@ export default function App() {
           linkError,
           nameError,
           isValid,
+          isLoading,
           currentUser,
           handleUpdateUser,
           handleUpdateAvatar,

@@ -8,6 +8,7 @@ export default function NewCard() {
     linkError,
     nameError,
     isValid,
+    isLoading,
   } = useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
@@ -79,7 +80,7 @@ export default function NewCard() {
         type="submit"
         disabled={!isValid}
       >
-        Salvar
+        {isLoading ? "Criando..." : "Criar"}
       </button>
     </form>
   );

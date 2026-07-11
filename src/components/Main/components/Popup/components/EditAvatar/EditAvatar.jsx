@@ -10,6 +10,7 @@ export default function EditAvatar(props) {
     handleValidation,
     linkError,
     isValid,
+    isLoading,
   } = useContext(CurrentUserContext);
 
   function handleSubmit(e) {
@@ -50,7 +51,7 @@ export default function EditAvatar(props) {
         type="submit"
         disabled={!isValid}
       >
-        Salvar
+        {isLoading ? "Salvando..." : "Salvar"}
       </button>
     </form>
   );

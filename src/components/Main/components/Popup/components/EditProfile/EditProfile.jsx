@@ -10,6 +10,7 @@ export default function EditProfile(props) {
     textError,
     nameError,
     isValid,
+    isLoading,
   } = useContext(CurrentUserContext);
 
   const [name, setName] = useState(currentUser.name);
@@ -85,7 +86,7 @@ export default function EditProfile(props) {
         type="submit"
         disabled={!isValid}
       >
-        Salvar
+        {isLoading ? "Salvando..." : "Salvar"}
       </button>
     </form>
   );
