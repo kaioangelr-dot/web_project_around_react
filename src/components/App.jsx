@@ -12,14 +12,64 @@ export default function App() {
 
   const [cards, setCards] = useState([]);
 
+  //form validator
+  const [textError, setTextError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [linkError, setLinkError] = useState("");
+  const [isValid, setIsValid] = useState(false);
+
+  const handleValidation = (evt) => {
+    if (evt.target.name === "name") {
+      setNameError(evt.target.validationMessage); //native message for validation
+    } else if (evt.target.name === "link") {
+      setLinkError(evt.target.validationMessage);
+    } else if (evt.target.name === "description") {
+      setTextError(evt.target.validationMessage);
+    }
+    setIsValid(evt.target.closest("form").checkValidity());
+  };
+
+  const resetMessageError = () => {
+    if (textError) setTextError("");
+    if (linkError) setLinkError("");
+    if (nameError) setNameError("");
+  };
+
+  //close and open popup
+  useEffect(() => {
+    if (!popup) return;
+
+    const handleEscape = (evt) => {
+      if (evt.key === "Escape") {
+        handleClosePopup();
+      }
+    };
+
+    const handleOverlayClose = (evt) => {
+      if (evt.target.classList.contains("popup")) {
+        handleClosePopup();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("click", handleOverlayClose);
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.removeEventListener("click", handleOverlayClose);
+    };
+  }, [popup]);
+
   function handleOpenPopup(popup) {
     setPopup(popup);
   }
 
   function handleClosePopup() {
     setPopup(null);
+
+    resetMessageError();
   }
 
+  //api calls
   useEffect(() => {
     (async () => {
       await api
@@ -104,10 +154,15 @@ export default function App() {
     <div className="page__content">
       <CurrentUserContext.Provider
         value={{
+          textError,
+          linkError,
+          nameError,
+          isValid,
           currentUser,
           handleUpdateUser,
           handleUpdateAvatar,
           handleAddPlaceSubmit,
+          handleValidation,
         }}
       >
         <Header />

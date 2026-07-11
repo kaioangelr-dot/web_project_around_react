@@ -2,24 +2,30 @@ import { useContext, useState } from "react";
 import { CurrentUserContext } from "../../../../../../contexts/CurrentUserContext";
 
 export default function NewCard() {
-  const { handleAddPlaceSubmit } = useContext(CurrentUserContext);
+  const {
+    handleAddPlaceSubmit,
+    handleValidation,
+    linkError,
+    nameError,
+    isValid,
+  } = useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
-    handleAddPlaceSubmit({
-      link: link,
-      name: name,
-    });
+    handleAddPlaceSubmit({ link, name });
   };
 
   const handleChangeName = (evt) => {
     setName(evt.target.value);
+
+    handleValidation(evt);
   };
   const handleChangeLink = (evt) => {
     setLink(evt.target.value);
+
+    handleValidation(evt);
   };
   return (
     <form
@@ -31,7 +37,7 @@ export default function NewCard() {
     >
       <label className="popup__field">
         <input
-          className="popup__input popup__input_type_card-name"
+          className={`popup__input popup__input_type_card-name ${nameError && "popup__input_type_error"}`}
           name="name"
           id="place-name"
           placeholder="Título"
@@ -42,11 +48,16 @@ export default function NewCard() {
           value={name}
           onChange={handleChangeName}
         />
-        <span id="place-name-input-error" className="popup__input-error"></span>
+        <span
+          id="place-name-input-error"
+          className={`popup__input-error ${!isValid && "popup__input-error_active"} `}
+        >
+          {nameError}
+        </span>
       </label>
       <label className="popup__field">
         <input
-          className="popup__input popup__input_type_url"
+          className={`popup__input popup__input_type_url ${linkError && "popup__input_type_error"}`}
           name="link"
           id="link"
           placeholder="Link de Imagem"
@@ -55,10 +66,19 @@ export default function NewCard() {
           value={link}
           onChange={handleChangeLink}
         />
-        <span id="link-input-error" className="popup__input-error"></span>
+        <span
+          id="link-input-error"
+          className={`popup__input-error ${!isValid && "popup__input-error_active"} `}
+        >
+          {linkError}
+        </span>
       </label>
 
-      <button className="button popup__button" type="submit">
+      <button
+        className="button popup__button"
+        type="submit"
+        disabled={!isValid}
+      >
         Salvar
       </button>
     </form>

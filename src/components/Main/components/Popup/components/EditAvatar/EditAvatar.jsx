@@ -1,9 +1,16 @@
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import { CurrentUserContext } from "../../../../../../contexts/CurrentUserContext";
 
 export default function EditAvatar(props) {
   const inputRef = useRef();
-  const { currentUser, handleUpdateUser, handleUpdateAvatar } = useContext(CurrentUserContext); /* prettier-ignore */
+  const {
+    currentUser,
+    handleUpdateUser,
+    handleUpdateAvatar,
+    handleValidation,
+    linkError,
+    isValid,
+  } = useContext(CurrentUserContext);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -22,20 +29,27 @@ export default function EditAvatar(props) {
     >
       <label className="popup__field">
         <input
-          className="popup__input"
+          className={`popup__input ${linkError && "popup__input_type_error"}`}
           name="link"
           id="link-avatar"
           placeholder="Link de Imagem"
           ref={inputRef}
           required
           type="url"
+          onChange={handleValidation}
         />
         <span
           id="link-avatar-input-error"
-          className="popup__input-error"
-        ></span>
+          className={`popup__input-error ${!isValid && "popup__input-error_active"}`}
+        >
+          {linkError}
+        </span>
       </label>
-      <button className="button popup__button" type="submit">
+      <button
+        className="button popup__button"
+        type="submit"
+        disabled={!isValid}
+      >
         Salvar
       </button>
     </form>

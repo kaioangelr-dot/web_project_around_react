@@ -68,7 +68,7 @@ This repository contains the **React** refactored version of the "Around the U.S
 
 - [x] Implement click handlers for deleting cards.
 - [x] Connect forms (`EditProfile`, `NewCard`, `EditAvatar`) with controlled states and original API calls.
-- [ ] Add native React form validation.
+- [x] Add native React form validation.
 - [x] Add like and delete features in the cards.
 
 ## Project Structure

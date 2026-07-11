@@ -3,17 +3,28 @@ import { CurrentUserContext } from "../../../../../../contexts/CurrentUserContex
 
 export default function EditProfile(props) {
   const userContext = useContext(CurrentUserContext);
-  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
+  const {
+    currentUser,
+    handleUpdateUser,
+    handleValidation,
+    textError,
+    nameError,
+    isValid,
+  } = useContext(CurrentUserContext);
 
   const [name, setName] = useState(currentUser.name);
   const [description, setDescription] = useState(currentUser.about);
 
   const handleNameChange = (evt) => {
     setName(evt.target.value);
+
+    handleValidation(evt);
   };
 
   const handleDescriptionChange = (evt) => {
     setDescription(evt.target.value);
+
+    handleValidation(evt);
   };
 
   const handleSubmit = (evt) => {
@@ -31,7 +42,7 @@ export default function EditProfile(props) {
     >
       <label className="popup__field">
         <input
-          className="popup__input popup__input_type_name"
+          className={`popup__input popup__input_type_name ${nameError && "popup__input_type_error"}`}
           name="name"
           id="name"
           placeholder="Nome"
@@ -42,11 +53,16 @@ export default function EditProfile(props) {
           onChange={handleNameChange}
           required
         />
-        <span id="name-input-error" className="popup__input-error"></span>
+        <span
+          id="name-input-error"
+          className={`popup__input-error ${!isValid && "popup__input-error_active"}`}
+        >
+          {nameError}
+        </span>
       </label>
       <label className="popup__field">
         <input
-          className="popup__input popup__input_type_description"
+          className={`popup__input popup__input_type_description ${textError && "popup__input_type_error"}`}
           name="description"
           id="description"
           placeholder="Sobre mim"
@@ -59,10 +75,16 @@ export default function EditProfile(props) {
         />
         <span
           id="description-input-error"
-          className="popup__input-error"
-        ></span>
+          className={`popup__input-error ${!isValid && "popup__input-error_active"}`}
+        >
+          {textError}
+        </span>
       </label>
-      <button className="button popup__button" type="submit">
+      <button
+        className="button popup__button"
+        type="submit"
+        disabled={!isValid}
+      >
         Salvar
       </button>
     </form>

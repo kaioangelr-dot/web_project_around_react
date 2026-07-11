@@ -23,10 +23,6 @@ class Api {
     }).then((res) => this._checkResponse(res));
   }
 
-  /*   getAllData() {
-    return Promise.all([this._getUserInfo(), this._getInitialCards()]);
-  } */
-
   editUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
