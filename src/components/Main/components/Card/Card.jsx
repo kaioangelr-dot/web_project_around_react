@@ -1,6 +1,5 @@
 import ImagePopup from "../Popup/components/ImagePopup/ImagePopup";
 import ConfirmationPopup from "../Popup/components/PopupWithConfirmation/PopupWithConfirmation";
-import Popup from "../Popup/Popup";
 
 export default function Card(props) {
   const { name, link, isLiked, owner } = props.card;

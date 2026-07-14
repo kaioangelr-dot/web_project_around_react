@@ -1,17 +1,13 @@
 import { useContext, useState } from "react";
 import { CurrentUserContext } from "../../../../../../contexts/CurrentUserContext";
+import useValidation from "../../../../../../hooks/useValidation";
 
 export default function NewCard() {
-  const {
-    handleAddPlaceSubmit,
-    handleValidation,
-    linkError,
-    nameError,
-    isValid,
-    isLoading,
-  } = useContext(CurrentUserContext);
+  const { handleAddPlaceSubmit, isLoading } = useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
+
+  const { handleValidation, linkError, nameError, isValid } = useValidation();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

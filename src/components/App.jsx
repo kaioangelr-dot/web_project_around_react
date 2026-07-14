@@ -4,6 +4,7 @@ import Footer from "./Footer/Footer";
 import { api } from "./../utils/api";
 import { useState, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import useValidation from "../hooks/useValidation";
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -14,30 +15,9 @@ export default function App() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  //form validator
-  const [textError, setTextError] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [linkError, setLinkError] = useState("");
-  const [isValid, setIsValid] = useState(false);
+  const { setIsValid, resetMessageError } = useValidation();
 
-  const handleValidation = (evt) => {
-    if (evt.target.name === "name") {
-      setNameError(evt.target.validationMessage); //native message for validation
-    } else if (evt.target.name === "link") {
-      setLinkError(evt.target.validationMessage);
-    } else if (evt.target.name === "description") {
-      setTextError(evt.target.validationMessage);
-    }
-    setIsValid(evt.target.closest("form").checkValidity());
-  };
-
-  const resetMessageError = () => {
-    if (textError) setTextError("");
-    if (linkError) setLinkError("");
-    if (nameError) setNameError("");
-  };
-
-  //close and open popup
+  //----------------------------------------------- close and open popup --------------------------------------------------------
   useEffect(() => {
     if (!popup) return;
 
@@ -73,7 +53,7 @@ export default function App() {
     resetMessageError();
   }
 
-  //api calls
+  //------------------------------------------------------- api calls -------------------------------------------------------------
   useEffect(() => {
     (async () => {
       await api
@@ -152,7 +132,7 @@ export default function App() {
   async function handleCardDelete(card) {
     await api
       .deleteCard(card._id)
-      .then((newCard) => {
+      .then(() => {
         setCards((state) =>
           state.filter((currentCard) => currentCard._id !== card._id),
         );
@@ -164,16 +144,11 @@ export default function App() {
     <div className="page__content">
       <CurrentUserContext.Provider
         value={{
-          textError,
-          linkError,
-          nameError,
-          isValid,
           isLoading,
           currentUser,
           handleUpdateUser,
           handleUpdateAvatar,
           handleAddPlaceSubmit,
-          handleValidation,
         }}
       >
         <Header />

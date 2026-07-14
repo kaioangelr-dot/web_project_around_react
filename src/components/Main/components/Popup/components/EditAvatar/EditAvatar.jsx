@@ -1,17 +1,12 @@
-import { useRef, useContext, useState } from "react";
+import { useRef, useContext } from "react";
 import { CurrentUserContext } from "../../../../../../contexts/CurrentUserContext";
+import useValidation from "../../../../../../hooks/useValidation";
 
-export default function EditAvatar(props) {
+export default function EditAvatar() {
   const inputRef = useRef();
-  const {
-    currentUser,
-    handleUpdateUser,
-    handleUpdateAvatar,
-    handleValidation,
-    linkError,
-    isValid,
-    isLoading,
-  } = useContext(CurrentUserContext);
+  const { handleUpdateAvatar, isLoading } = useContext(CurrentUserContext);
+
+  const { handleValidation, linkError, isValid } = useValidation();
 
   function handleSubmit(e) {
     e.preventDefault();

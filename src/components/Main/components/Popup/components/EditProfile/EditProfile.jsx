@@ -1,20 +1,15 @@
 import { useState, useContext } from "react";
 import { CurrentUserContext } from "../../../../../../contexts/CurrentUserContext";
+import useValidation from "../../../../../../hooks/useValidation";
 
-export default function EditProfile(props) {
-  const userContext = useContext(CurrentUserContext);
-  const {
-    currentUser,
-    handleUpdateUser,
-    handleValidation,
-    textError,
-    nameError,
-    isValid,
-    isLoading,
-  } = useContext(CurrentUserContext);
+export default function EditProfile() {
+  const { currentUser, handleUpdateUser, isLoading } =
+    useContext(CurrentUserContext);
 
   const [name, setName] = useState(currentUser.name);
   const [description, setDescription] = useState(currentUser.about);
+
+  const { handleValidation, textError, nameError, isValid } = useValidation();
 
   const handleNameChange = (evt) => {
     setName(evt.target.value);

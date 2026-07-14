@@ -1,5 +1,4 @@
-import avatar from "../../images/avatar.jpg";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import Popup from "./components/Popup/Popup";
 
 import NewCard from "./components/Popup/components/NewCard/NewCard";
@@ -9,7 +8,7 @@ import Card from "./components/Card/Card";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 export default function Main(props) {
-  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const {
     handleOpenPopup,

@@ -75,7 +75,7 @@ Native React form validation
 - [ ] Costumize site with Css Masonry
 - [ ] Implement user login
 - [ ] Implement sign up
-- [ ] Add Like buttons counts
+- [ ] Add Like button count
 
 ## Project Structure
 
